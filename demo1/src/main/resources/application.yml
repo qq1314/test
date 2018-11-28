@@ -1,0 +1,66 @@
+server:
+  address: localhost
+  port: 8080
+  servlet:
+    context-path: /demo1
+  tomcat:
+    uri-encoding: UTF-8
+
+
+name: 123
+spring:
+  http:
+    encoding:
+      charset: utf-8
+      enabled: true
+      force: true
+  mvc:
+    view:
+      prefix: /WEB-INF/views/
+      suffix: .jsp
+  datasource:
+    url: jdbc:mysql://127.0.0.1:3306/test?characterEncoding=UTF-8&serverTimezone=GMT%2B8
+    username: root
+    password: waqq1314
+    driver-class-name: com.mysql.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+  redis:
+    host: 127.0.0.1
+    port: 6379
+    password:
+    jedis:
+      pool:
+        max-active: 8  # 连接池最大连接数（使用负值表示没有限制）
+        max-wait: -1 # 连接池最大阻塞等待时间（使用负值表示没有限制）
+        max-idle: 8 # 连接池中的最大空闲连接
+        min-idle: 0 # 连接池中的最小空闲连接
+    timeout: 30000 # 连接超 时时间（毫秒）
+  rabbitmq:
+      host: localhost
+      port: 5672
+      username: guest
+      password: guest
+      virtual-host: /
+      listener:
+        simple:
+          acknowledge-mode: manual # 手动应答
+          concurrency: 5 # 消费端最小并发数
+          max-concurrency: 10 # 消费端最大并发数
+          prefetch: 5 # 一次请求中预处理的消息数量
+      cache:
+        channel:
+          size: 50 # 缓存的channel数量
+  ### 自定义配置
+mq:
+  defaultExchange: amqpExchange # 默认交换器
+  queue: queue # 队列名
+  routeKey: queue_key # 路由key
+
+
+## 该配置节点为独立的节点，有很多同学容易将这个配置放在spring的节点下，导致配置无法被识别
+mybatis:
+  mapper-locations: classpath:mapping/*.xml  #注意：一定要对应mapper映射xml文件的所在路径
+  type-aliases-package: com.example.demo.pojo  # 注意：对应实体类的路径
+
